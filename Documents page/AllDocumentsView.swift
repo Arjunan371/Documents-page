@@ -20,20 +20,23 @@ class AllDocumentsView: UIViewController {
    
     override func viewDidLoad() {
         super.viewDidLoad()
-        viewModel.forApiIntegration(page: viewModel.allDocumentViewModel?.currentPage ?? 0)
+        if viewModel.allDocumentDatums.isEmpty {
+            viewModel.forApiIntegration(page: viewModel.currentPage, limit: 10)
+        }
         viewModel.indicatorStart = {
             DispatchQueue.main.async {
                 self.pagingIndicator.startAnimating()
             }
            
         }
-
+       
         viewModel.reloadTableView = {
             self.DocumentTableView.reloadData()
             self.pagingIndicator.isHidden = true
             self.pagingIndicator.stopAnimating()
         }
        print("good")
+        
         DocumentTableView.delegate = self
         DocumentTableView.dataSource = self
         forCornerRadius()
@@ -46,7 +49,7 @@ class AllDocumentsView: UIViewController {
         super.viewWillAppear(animated)
     
     }
-    
+
     func forCornerRadius() {
         plusButton.layer.cornerRadius = 30
         searchButton.layer.cornerRadius = 16
@@ -57,67 +60,62 @@ class AllDocumentsView: UIViewController {
         Starred?.layer.masksToBounds = true
         AllDocuments?.layer.masksToBounds = true
     }
- 
 
     
 }
 
 extension AllDocumentsView: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return viewModel.allDocumentViewModel?.data?.count ?? 0
+        return viewModel.allDocumentDatums.count
         
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
         let cell = tableView.dequeueReusableCell(withIdentifier: "DocumentTableViewCell", for: indexPath) as! DocumentTableViewCell
-        let documentData = viewModel.allDocumentViewModel
-        //   cell.ImageData?.image = UIImage(named: documentData?.data[indexPath.row].url)
-        cell.DataName?.text = "\(documentData?.data?[indexPath.row].name ?? "")"
-        cell.DataUploadBy?.text = "\(documentData?.data?[indexPath.row].UploadedBy?.name?.first ?? "" )" + "  " + "\(documentData?.data?[indexPath.row].UploadedBy?.name?.last ?? "" )"
-        cell.DataUpdateDate?.text = "\(documentData?.data?[indexPath.row].updatedAt ?? "")"
-        cell.imageOptimization()
-        if let urlString = documentData?.data?[indexPath.row].url, let url = URL(string: urlString) {
-            DispatchQueue.global().async {
-                if let data = try? Data(contentsOf: url), let image = UIImage(data: data) {
-                    DispatchQueue.main.async {
-                        cell.ImageData?.image = image
+
+            let documentData = viewModel.allDocumentDatums
+            //   cell.ImageData?.image = UIImage(named: documentData?.data[indexPath.row].url)
+            cell.DataName?.text = "\(documentData[indexPath.row].name ?? "")"
+            cell.DataUploadBy?.text = "\(documentData[indexPath.row].UploadedBy?.name?.first ?? "" )" + "  " + "\(documentData[indexPath.row].UploadedBy?.name?.last ?? "" )"
+            cell.DataUpdateDate?.text = "\(documentData[indexPath.row].updatedAt ?? "")"
+            cell.imageOptimization()
+            if let urlString = documentData[indexPath.row].url, let url = URL(string: urlString) {
+                DispatchQueue.global().async {
+                    if let data = try? Data(contentsOf: url), let image = UIImage(data: data) {
+                        DispatchQueue.main.async {
+                            cell.ImageData?.image = image
+                        }
                     }
                 }
             }
-        }
+            
+            let cornerRadius: CGFloat = 20.0 // Adjust this value as needed
+            let corners: UIRectCorner = [.topLeft, .topRight] // Specify the corners you want rounded
+            
+            let maskPath = UIBezierPath(roundedRect: cell.ImageData!.bounds,
+                                        byRoundingCorners: corners,
+                                        cornerRadii: CGSize(width: cornerRadius, height: cornerRadius))
+            
+            let maskLayer = CAShapeLayer()
+            maskLayer.path = maskPath.cgPath
+            cell.ImageData?.layer.mask = maskLayer
+            
+            cell.reloadTableView = {
+                tableView.reloadData()
+            }
         
-        let cornerRadius: CGFloat = 20.0 // Adjust this value as needed
-        let corners: UIRectCorner = [.topLeft, .topRight] // Specify the corners you want rounded
-        
-        let maskPath = UIBezierPath(roundedRect: cell.ImageData!.bounds,
-                                    byRoundingCorners: corners,
-                                    cornerRadii: CGSize(width: cornerRadius, height: cornerRadius))
-        
-        let maskLayer = CAShapeLayer()
-        maskLayer.path = maskPath.cgPath
-        cell.ImageData?.layer.mask = maskLayer
-        
-        cell.reloadTableView = {
-            tableView.reloadData()
-        }
         return cell
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return UITableView.automaticDimension
     }
-    func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
-        print(indexPath.row)
+
+    }
+
+extension UITableView {
+    func scrollToBottom() {
         
-         var pageNo = viewModel.allDocumentViewModel?.currentPage ?? 0
-        if indexPath.row == (viewModel.allDocumentViewModel?.data?.count ?? 0) - 10 {
-            viewModel.fetchAllDocumentData(page: pageNo)
-            pageNo = pageNo + 1
-            viewModel.reloadTableView2 = {
-                self.DocumentTableView.reloadData()
-            }
-        }
     }
-       
-    }
+}
