@@ -32,3 +32,27 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         }
 }
 
+extension UIApplication {
+    static var statusBarFrame: CGRect {
+        let window = shared.windows.filter { $0.isKeyWindow }.first
+        let statusBarFrame = window?.windowScene?.statusBarManager?.statusBarFrame ?? .zero
+        return statusBarFrame
+    }
+    static func topViewController(base: UIViewController? = ((UIApplication.shared.connectedScenes.first as? UIWindowScene)?.delegate as? AppDelegate)?.window?.rootViewController) -> UIViewController? {
+        
+        if let nav = base as? UINavigationController {
+            return topViewController(base: nav.visibleViewController)
+
+        } else if let tab = base as? UITabBarController, let selected = tab.selectedViewController {
+            if let presented = selected.presentedViewController {
+                return topViewController(base: presented)
+            } else {
+                return tab
+            }
+
+        } else if let presented = base?.presentedViewController {
+            return topViewController(base: presented)
+        }
+        return base
+    }
+}
