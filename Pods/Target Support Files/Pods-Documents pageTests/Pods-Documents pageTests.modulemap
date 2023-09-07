@@ -1,0 +1,6 @@
+framework module Pods_Documents_pageTests {
+  umbrella header "Pods-Documents pageTests-umbrella.h"
+
+  export *
+  module * { export * }
+}

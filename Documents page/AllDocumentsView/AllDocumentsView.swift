@@ -3,6 +3,8 @@ import UIKit
 import QuartzCore
 import QuickLook
 import AVFoundation
+import SDWebImage
+
 class AllDocumentsView: UIViewController {
     @IBOutlet weak var label1: UILabel!
     @IBOutlet weak var searchButton: UIButton!
@@ -15,6 +17,7 @@ class AllDocumentsView: UIViewController {
     let documentInteractionController = UIDocumentInteractionController()
     let viewModel = AllDocumentViewModel()
     var hideDownloadButton: (() -> ())?
+    
     var searchBar1: UISearchBar = {
         let searchBar = UISearchBar()
         searchBar.placeholder = "Search..."
@@ -30,25 +33,22 @@ class AllDocumentsView: UIViewController {
     }()
     
     private var topMostVC: UIViewController? {
-            return UIApplication.topViewController()
-        }
+        return UIApplication.topViewController()
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
-       // searchBar1.isTranslucent = true
+        Starred.backgroundColor = .white.withAlphaComponent(0.5)
         constraintForSearchBar()
         searchBar1.delegate = self
         searchBar1.isHidden = true
-
-
         if viewModel.allDocumentDatums.isEmpty {
             viewModel.indicatorStart = {
                 DispatchQueue.main.async {
                     self.showLoading()
                 }
             }
-
+            
             if viewModel.apiReady {
                 viewModel.apiReady = false
                 viewModel.forApiIntegration(page: 1, limit: 10,completion: {
@@ -57,21 +57,12 @@ class AllDocumentsView: UIViewController {
                 })
             }
         }
-
-
-       print("good")
-        
         DocumentTableView.delegate = self
         DocumentTableView.dataSource = self
         forCornerRadius()
-       DocumentTableView.register(UINib(nibName: "DocumentTableViewCell", bundle: nil), forCellReuseIdentifier: "DocumentTableViewCell")
-        
+        DocumentTableView.register(UINib(nibName: "DocumentTableViewCell", bundle: nil), forCellReuseIdentifier: "DocumentTableViewCell")
     }
-
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-
-    }
+    
     @IBAction func StarredDocuments(_ sender: UIButton) {
         viewModel.filterButtonIndex = 1
         if !viewModel.searchEnable {
@@ -86,8 +77,6 @@ class AllDocumentsView: UIViewController {
     
     @IBAction func searchAction(_ sender: Any) {
         viewModel.searchEnable = true
-        //searchBar1.showsCancelButton = true
-        //searchBar1.isUserInteractionEnabled = true
         searchBar1.isHidden = false
         searchBar1.becomeFirstResponder()
         searchButton.isHidden = true
@@ -99,6 +88,7 @@ class AllDocumentsView: UIViewController {
             }
         }
     }
+    
     @IBAction func AllDocuments(_ sender: UIButton) {
         viewModel.filterButtonIndex = 2
         if !viewModel.searchEnable {
@@ -110,35 +100,37 @@ class AllDocumentsView: UIViewController {
         AllDocuments.tintColor = .systemBlue
         DocumentTableView.reloadData()
     }
+    
     func showLoading() {
         DispatchQueue.main.async {
             self.activityIndicator.showActivityIndicator(uiView: self.view )
         }
     }
+    
     func hideLoadingView(){
-           DispatchQueue.main.async {
-               self.activityIndicator.hideActivityIndicator()
-           }
-       }
-
+        DispatchQueue.main.async {
+            self.activityIndicator.hideActivityIndicator()
+        }
+    }
+    
     func forCornerRadius() {
-
         searchButton.layer.cornerRadius = 15
         Starred.layer.cornerRadius = 15
         AllDocuments.layer.cornerRadius = 15
         Starred?.layer.masksToBounds = true
         AllDocuments?.layer.masksToBounds = true
     }
+    
     func constraintForSearchBar() {
         view.addSubview(searchBar1)
         
         NSLayoutConstraint.activate([
             searchBar1.topAnchor.constraint(equalTo: searchButton.topAnchor),
             searchBar1.leadingAnchor.constraint(equalTo: backButton.trailingAnchor,constant: -5),
-            searchBar1.trailingAnchor.constraint(equalTo: searchButton.leadingAnchor,constant: -5),
+            searchBar1.trailingAnchor.constraint(equalTo: view.trailingAnchor,constant: -5),
             searchBar1.bottomAnchor.constraint(equalTo: backButton.bottomAnchor),
         ])
-   
+        
     }
     
 }
@@ -152,7 +144,7 @@ extension AllDocumentsView: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
         let cell = tableView.dequeueReusableCell(withIdentifier: "DocumentTableViewCell", for: indexPath) as! DocumentTableViewCell
-
+        
         let documentData = viewModel.starredArray
         cell.DataName?.text = "\(documentData[indexPath.row].name ?? "")"
         
@@ -177,21 +169,12 @@ extension AllDocumentsView: UITableViewDelegate, UITableViewDataSource {
         print("viewModel.starredArray====>, ",viewModel.starredArray[indexPath.row].isSelected)
         switch fileType {
         case "jpg","jpeg","png" :
-            if let url = URL(string: documentData[indexPath.row].url ?? ""){
-                DispatchQueue.global().async {
-                    if let data = try? Data(contentsOf: url), let image = UIImage(data: data) {
-                        DispatchQueue.main.async {
-                            cell.ImageData?.image = image
-                            
-                        }
-                    }
-                }
-            }
+            cell.ImageData?.sd_setImage(with: URL(string: documentData[indexPath.row].url ?? ""))
             cell.ImageData?.isHidden = false
         case "mp4","mov" :
             cell.playImage.isHidden = false
         default:
-           break
+            break
         }
         
         // cell.imageTopCorner()
@@ -211,7 +194,7 @@ extension AllDocumentsView: UITableViewDelegate, UITableViewDataSource {
         guard let indexPath = DocumentTableView.indexPathForRow(at: btnPos) else {
             return
         }
-
+        
         if viewModel.starredArray[indexPath.row].isStarSelected {
             if let index = viewModel.indexOf(data: viewModel.starredArray[indexPath.row]) {
                 viewModel.allDocumentDatums[index].isStarSelected = false
@@ -263,7 +246,6 @@ extension AllDocumentsView: UITableViewDelegate, UITableViewDataSource {
         
     }
     
-
     @objc func downloadButtonAction(sender: UIButton) {
         let btnPos = sender.convert(CGPoint.zero, to: DocumentTableView)
         guard let indexPath = DocumentTableView.indexPathForRow(at: btnPos) else {
@@ -285,7 +267,6 @@ extension AllDocumentsView: UITableViewDelegate, UITableViewDataSource {
         }
     }
     
-    
     func shareFile(url: URL) {
         //        guard let view = topMostVC?.view else {
         //            return
@@ -297,7 +278,6 @@ extension AllDocumentsView: UITableViewDelegate, UITableViewDataSource {
         documentInteractionController.presentOpenInMenu(from: view.frame, in: view, animated: true)
         //documentInteractionController.delegate = self
     }
-    
     
     func downloadfile(fileUrl:String,completion: @escaping (_ success: Bool,_ fileLocation: URL?) -> Void) {
         
@@ -350,6 +330,7 @@ extension AllDocumentsView: UITableViewDelegate, UITableViewDataSource {
             }).resume()
         }
     }
+    
     @objc func threeDotbuttonAction(sender: UIButton) {
         
         let btnPos = sender.convert(CGPoint.zero, to: DocumentTableView)
@@ -359,26 +340,26 @@ extension AllDocumentsView: UITableViewDelegate, UITableViewDataSource {
         let selectedModel = viewModel.starredArray[indexPath.row]
         for (index,model) in viewModel.allDocumentDatums.enumerated() {
             if selectedModel.id == model.id {
-                  viewModel.allDocumentDatums[index].isSelected = !selectedModel.isSelected
+                viewModel.allDocumentDatums[index].isSelected = !selectedModel.isSelected
                 // viewModel.allDocumentDatums[index].isSelected.toggle()
             }
             else {
                 viewModel.allDocumentDatums[index].isSelected = false
             }
-//            if viewModel.starredArray[indexPath.row].isSelected {
-//                if let index = viewModel.indexOf(data: viewModel.starredArray[indexPath.row]) {
-//                    viewModel.allDocumentDatums[index].isSelected = false
-//                }
-//            } else {
-//                if let index = viewModel.indexOf(data: viewModel.starredArray[indexPath.row]) {
-//                    viewModel.allDocumentDatums[index].isSelected = true
-//                }
-//            }
+            //            if viewModel.starredArray[indexPath.row].isSelected {
+            //                if let index = viewModel.indexOf(data: viewModel.starredArray[indexPath.row]) {
+            //                    viewModel.allDocumentDatums[index].isSelected = false
+            //                }
+            //            } else {
+            //                if let index = viewModel.indexOf(data: viewModel.starredArray[indexPath.row]) {
+            //                    viewModel.allDocumentDatums[index].isSelected = true
+            //                }
+            //            }
         }
         viewModel.filteredData()
         DocumentTableView.reloadData()
         return
-      
+        
     }
     
     func DateFromWebtoApp(_ date: String) -> String {
@@ -393,7 +374,7 @@ extension AllDocumentsView: UITableViewDelegate, UITableViewDataSource {
         return UITableView.automaticDimension
     }
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-    
+        
         let documentData = viewModel.starredArray
         let fileType = documentData[indexPath.row].url
         if let fileExtension = URL(string: fileType ?? "")?.pathExtension.lowercased(){
@@ -411,13 +392,13 @@ extension AllDocumentsView: UITableViewDelegate, UITableViewDataSource {
                 break
             }
         }
-     
+        
     }
 }
 
 extension AllDocumentsView {
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
-       
+        
         if ((scrollView.contentOffset.y + scrollView.frame.size.height) > scrollView.contentSize.height) && !viewModel.searchEnable {
             let currentPageNo = viewModel.currentPage
             let totalPageNo = viewModel.totalpage
@@ -433,8 +414,8 @@ extension AllDocumentsView {
             }
         }
         
-        }
-       
+    }
+    
     func loadMoreItems(){
         viewModel.forApiIntegration(page: viewModel.currentPage + 1, limit: 10) {
             self.DocumentTableView.reloadData()
@@ -461,22 +442,11 @@ extension AllDocumentsView: UISearchBarDelegate {
         AllDocuments.isEnabled = true
         Starred.isEnabled = true
         DocumentTableView.reloadData()
-
+        
     }
     
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
-        /*
-        if viewModel.filterButtonIndex == 2 {
-            viewModel.searchArray = viewModel.starredArray.filter({ element in
-                element.name?.lowercased().contains(searchText.lowercased()) == true ||
-                element.UploadedBy?.name?.first?.lowercased().contains(searchText.lowercased()) == true ||         element.UploadedBy?.name?.last?.lowercased().contains(searchText.lowercased()) == true ||             element.updatedAt?.lowercased().contains(searchText.lowercased()) == true ||
-                element.type?.lowercased().contains(searchText.lowercased()) == true ||
-                "\(element.sessions?.first?.deliveryNo ?? 0)"
-                    .lowercased().contains(searchText.lowercased()) == true ||
-                "\(element.sessions?.first?.deliverySymbol ?? "")"
-                    .lowercased().contains(searchText.lowercased()) == true
-            })
-        } */
+        
         viewModel.filteredData(searchText: searchText)
         self.DocumentTableView.reloadData()
     }

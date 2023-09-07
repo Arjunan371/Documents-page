@@ -7,12 +7,6 @@
 
 import Foundation
 
-//struct AllDocumentModel {
-//    var tableViewimages: String = ""
-//    var labelText: String = ""
-//    var drText: String = ""
-//    var finalText: String = ""
-//}
 struct AllDocumentModel: Codable {
     let totalDoc: Int?
     let totalPages: Int?
@@ -31,27 +25,29 @@ struct DataInside: Codable {
     var isStarSelected: Bool = false
     var isSelected = false
     enum CodingKeys: String, CodingKey {
-      case id = "_id"
-      case name
-      case url
-      case updatedAt
-      case UploadedBy
-      case sessions
-      case type
+        case id = "_id"
+        case name
+        case url
+        case updatedAt
+        case UploadedBy
+        case sessions
+        case type
     }
 }
+
 struct UploadedByName: Codable {
     let name: NameFirstLast?
     
 }
+
 struct NameFirstLast: Codable {
     let first: String?
     let last: String?
 }
+
 struct SessionName: Codable {
     let deliverySymbol:String?
-    let deliveryNo: Int?
-    
+    let deliveryNo: Int?    
     enum CodingKeys: String, CodingKey {
         case deliverySymbol = "delivery_symbol"
         case deliveryNo = "delivery_no"

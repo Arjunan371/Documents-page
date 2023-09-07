@@ -10,7 +10,6 @@ class DGPreviewController: QLPreviewController, QLPreviewControllerDataSource {
     
     //var fileName: String = ""
     var fileUrl: String = ""
-    
     //private var previewItem : PreviewItem!
     var previewItem: NSURL?
     var isShowError = false
@@ -55,16 +54,19 @@ class DGPreviewController: QLPreviewController, QLPreviewControllerDataSource {
         
         // Do any additional setup after loading the view.
     }
+    
     override func viewDidDisappear(_ animated: Bool) {
         super.viewDidDisappear(animated)
         if self.isMovingFromParent {
             downloadTask?.cancel()
         }
     }
+    
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         // InprogressView.shared.hide()
     }
+    
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         self.navigationItem.rightBarButtonItem = nil
@@ -98,8 +100,6 @@ class DGPreviewController: QLPreviewController, QLPreviewControllerDataSource {
     //    }
     
     func downloadfile(fileUrl:String,completion: @escaping (_ success: Bool,_ fileLocation: URL?) -> Void){
-        
-        
         let filename = (fileUrl.components(separatedBy: "/").last ?? "").components(separatedBy: "?").first ?? ""
         let fileExtension = filename.components(separatedBy: ".")
         if fileExtension.count <= 1 {
@@ -116,7 +116,6 @@ class DGPreviewController: QLPreviewController, QLPreviewControllerDataSource {
             completion(false, nil)
             return
         }
-        
         createNewFolder(folderName: "DocumentFile")
         // then lets create your document folder url
         //let documentsDirectoryURL =  FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!
@@ -141,7 +140,6 @@ class DGPreviewController: QLPreviewController, QLPreviewControllerDataSource {
                 } catch let error as NSError {
                     //             log(error.localizedDescription)
                     completion(false, nil)
-                    
                 }
             })
             downloadTask?.resume()
@@ -161,22 +159,23 @@ class DGPreviewController: QLPreviewController, QLPreviewControllerDataSource {
             }
         }
     }
-        func loadFile() {
-            
-            DispatchQueue.main.async {
-                self.activityIndicator.isHidden = true
-                self.reloadData()
-            }
-        }
+    
+    func loadFile() {
         
-        func numberOfPreviewItems(in controller: QLPreviewController) -> Int {
-            return previewItem == nil ? 0 : 1
-        }
-        
-        func previewController(_ controller: QLPreviewController, previewItemAt index: Int) -> QLPreviewItem {
-            return previewItem! as QLPreviewItem
+        DispatchQueue.main.async {
+            self.activityIndicator.isHidden = true
+            self.reloadData()
         }
     }
+    
+    func numberOfPreviewItems(in controller: QLPreviewController) -> Int {
+        return previewItem == nil ? 0 : 1
+    }
+    
+    func previewController(_ controller: QLPreviewController, previewItemAt index: Int) -> QLPreviewItem {
+        return previewItem! as QLPreviewItem
+    }
+}
 
 extension UIView {
     var allViews: [UIView] {

@@ -2,30 +2,23 @@
 import UIKit
 
 class documentTabBar: UITabBarController {
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
         forTabBarController()
         self.selectedIndex = 1
-//        for tabbarImage in 0..<images.count {
-//            items[tabbarImage].image = UIImage(systemName: images[tabbarImage])
-//
-//        }
-       
     }
+    
     func forTabBarController() {
         let documentView = AllDocumentsView()
         let mySessionView = MySessionsViewController()
         let allActionsView = AllActionsViewController()
-        
         documentView.title = "Document"
         allActionsView.title = "All Activities"
         mySessionView.title = "My Sessions"
-        
         // Set view controllers for the tab bar controller
         setViewControllers([mySessionView, documentView, allActionsView], animated: false)
-        
         // Customize the appearance of the tab bar items
         if let items = tabBar.items {
             let imageNames = ["bookmark", "doc", "check"]
@@ -55,7 +48,6 @@ class documentTabBar: UITabBarController {
         tabBar.unselectedItemTintColor = UIColor.white.withAlphaComponent(0.5)
         tabBar.tintColor = UIColor.white
     }
-
     
     func resizeImage(image: UIImage, targetSize: CGSize) -> UIImage {
         let renderer = UIGraphicsImageRenderer(size: targetSize)
@@ -64,5 +56,5 @@ class documentTabBar: UITabBarController {
         }
         return resizedImage
     }
-     
-        }
+    
+}

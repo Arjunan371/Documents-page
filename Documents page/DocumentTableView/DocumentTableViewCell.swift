@@ -2,7 +2,6 @@
 import UIKit
 
 class DocumentTableViewCell: UITableViewCell {
-
     @IBOutlet weak var view2: UIView!
     @IBOutlet weak var downloadButton: UIButton!
     @IBOutlet weak var customView: UIView!
@@ -14,57 +13,39 @@ class DocumentTableViewCell: UITableViewCell {
     @IBOutlet weak var threeDot: UIButton!
     @IBOutlet weak var starButton: UIButton!
     @IBOutlet weak var ImageData: UIImageView?
-    var reloadTableView: (() -> ())?   
-   
+    var reloadTableView: (() -> ())?
     let viewModel = AllDocumentsView()
-  
+    
     override func awakeFromNib() {
         super.awakeFromNib()
         view2.layer.cornerRadius = 10
         view2.layer.maskedCorners = [.layerMinXMinYCorner, .layerMaxXMinYCorner]
         view2.clipsToBounds = true
-      customView.layer.cornerRadius = 10
+        customView.layer.cornerRadius = 10
         downloadButton.isHidden = true
         downloadButton.layer.cornerRadius = 5
         contentView.layer.backgroundColor = CGColor(red: 239/255, green: 239/255, blue: 239/255, alpha: 1)
-       // layer.backgroundColor = UIColor.green.cgColor
         self.reloadTableView?()
-
-//        starButton.setImage(UIImage(systemName: "star"), for: .normal)
-//        starButton.tintColor = .lightGray
-           
+        
     }
-  
-//    @IBAction func starAction(_ sender: Any) {
-//                if select == true {
-//                    starButton.setImage(UIImage(systemName: "star"), for: .normal)
-//                    starButton.tintColor = .lightGray
-//                    select = false
-//                } else {
-//                    starButton.setImage(UIImage(systemName: "star.fill"), for: .normal)
-//                    starButton.tintColor = .systemBlue
-//                    select = true
-//                }
-//    }
     override func layoutSubviews() {
         super.layoutSubviews()
-
+        
         customView.layer.masksToBounds = false
         customView.layer.shadowOffset = CGSize(width: -1, height: 1)
         customView.layer.shadowRadius = 3
         customView.layer.shadowOpacity = 0.2
     }
     
-    
     override func prepareForReuse() {
         super.prepareForReuse()
-
+        
     }
+    
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
-
-        // Configure the view for the selected state
     }
+    
     func imageConfigure(cellObj: DataInside) {
         switch cellObj.name?.lowercased() {
         case "mp4" :
@@ -78,48 +59,5 @@ class DocumentTableViewCell: UITableViewCell {
         default :
             imageFormat?.image = UIImage(named: "doc")
         }
-        
-//        if cellObj.isSelected {
-//            downloadButton.isHidden = false
-//        } else {
-//            downloadButton.isHidden = true
-//        }
-        
-        print("cellObj.isSelected===>",cellObj.isSelected)
-        
     }
-    
-//    func imageOptimization() {
-//        if DataName?.text == "mp4" .lowercased() {
-//            imageFormat?.image = UIImage(named: "mp4")
-//        } else if DataName?.text == "mp3".lowercased() {
-//            imageFormat?.image = UIImage(named: "mp3")
-//        } else if DataName?.text == "pdf".lowercased() {
-//            imageFormat?.image = UIImage(named: "pdf")
-//        } else {
-//            imageFormat?.image = UIImage(named: "doc" )
-//        }
-//    }
-//    func imageTopCorner() {
-//        let cornerRadius: CGFloat = 10.0 // Adjust this value as needed
-//        let corners: UIRectCorner = [.topLeft, .topRight] // Specify the corners you want rounded
-//
-//        let maskPath = UIBezierPath(roundedRect: ImageData!.bounds,
-//                                    byRoundingCorners: corners,
-//                                    cornerRadii: CGSize(width: cornerRadius, height: cornerRadius))
-//
-//        let maskLayer = CAShapeLayer()
-//        maskLayer.path = maskPath.cgPath
-//        ImageData?.layer.mask = maskLayer
-//    }    
 }
-
-//extension UIView {
-//
-//    func roundCorners(_ corners: UIRectCorner, radius: CGFloat) {
-//        let path = UIBezierPath(roundedRect: self.bounds, byRoundingCorners: corners, cornerRadii: CGSize(width: radius, height: radius))
-//        let mask = CAShapeLayer()
-//        mask.path = path.cgPath
-//        self.layer.mask = mask
-//    }
-//}

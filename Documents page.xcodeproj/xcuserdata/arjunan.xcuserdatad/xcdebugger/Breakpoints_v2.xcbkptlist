@@ -174,8 +174,8 @@
             filePath = "Documents page/AllDocumentsView/AllDocumentViewModel.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "96"
-            endingLineNumber = "96"
+            startingLineNumber = "64"
+            endingLineNumber = "64"
             landmarkName = "forApiIntegration(page:limit:completion:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -190,10 +190,10 @@
             filePath = "Documents page/AllDocumentsView/AllDocumentViewModel.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "56"
-            endingLineNumber = "56"
-            landmarkName = "filteredData(searchText:)"
-            landmarkType = "7">
+            startingLineNumber = "26"
+            endingLineNumber = "26"
+            landmarkName = "AllDocumentViewModel"
+            landmarkType = "3">
             <Locations>
                <Location
                   uuid = "095E93F5-324F-46C2-B573-79565AFE4ECF - 1ad4e3441115cdcd"
@@ -231,70 +231,6 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "54B53F54-DCB2-4194-B0AF-044CCAE800E7"
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "Documents page/DocumentTableView/DocumentTableViewCell.swift"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "82"
-            endingLineNumber = "82"
-            landmarkName = "imageConfigure(cellObj:)"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            uuid = "1A32E16D-76AD-4E9A-87EA-9F1C5CBC3542"
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "Documents page/DocumentTableView/DocumentTableViewCell.swift"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "83"
-            endingLineNumber = "83"
-            landmarkName = "imageConfigure(cellObj:)"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            uuid = "9AB646A5-EF87-4DE3-80E0-A4CE77207972"
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "Documents page/DocumentTableView/DocumentTableViewCell.swift"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "85"
-            endingLineNumber = "85"
-            landmarkName = "imageConfigure(cellObj:)"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            uuid = "7442EE00-0263-46FE-956D-D1A50B37F502"
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "Documents page/AllDocumentsView/AllDocumentsView.swift"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "185"
-            endingLineNumber = "185"
-            landmarkName = "tableView(_:cellForRowAt:)"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
             uuid = "16D93B00-B8A7-4722-AA3D-74FD875F1D84"
             shouldBeEnabled = "No"
             ignoreCount = "0"
@@ -302,8 +238,8 @@
             filePath = "Documents page/AllDocumentsView/AllDocumentsView.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "268"
-            endingLineNumber = "268"
+            startingLineNumber = "250"
+            endingLineNumber = "250"
             landmarkName = "downloadButtonAction(sender:)"
             landmarkType = "7">
             <Locations>
@@ -350,8 +286,8 @@
             filePath = "Documents page/AllDocumentsView/AllDocumentsView.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "290"
-            endingLineNumber = "290"
+            startingLineNumber = "271"
+            endingLineNumber = "271"
             landmarkName = "shareFile(url:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -366,8 +302,8 @@
             filePath = "Documents page/AllDocumentsView/AllDocumentsView.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "279"
-            endingLineNumber = "279"
+            startingLineNumber = "261"
+            endingLineNumber = "261"
             landmarkName = "downloadButtonAction(sender:)"
             landmarkType = "7">
             <Locations>
@@ -414,8 +350,8 @@
             filePath = "Documents page/AllDocumentsView/AllDocumentsView.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "282"
-            endingLineNumber = "282"
+            startingLineNumber = "264"
+            endingLineNumber = "264"
             landmarkName = "downloadButtonAction(sender:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -430,8 +366,8 @@
             filePath = "Documents page/AllDocumentsView/AllDocumentsView.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "335"
-            endingLineNumber = "335"
+            startingLineNumber = "315"
+            endingLineNumber = "315"
             landmarkName = "downloadfile(fileUrl:completion:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -446,8 +382,8 @@
             filePath = "Documents page/AllDocumentsView/AllDocumentsView.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "305"
-            endingLineNumber = "305"
+            startingLineNumber = "285"
+            endingLineNumber = "285"
             landmarkName = "downloadfile(fileUrl:completion:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -462,8 +398,8 @@
             filePath = "Documents page/AllDocumentsView/AllDocumentsView.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "293"
-            endingLineNumber = "293"
+            startingLineNumber = "274"
+            endingLineNumber = "274"
             landmarkName = "shareFile(url:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -478,8 +414,8 @@
             filePath = "Documents page/AllDocumentsView/AllDocumentsView.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "105"
-            endingLineNumber = "105"
+            startingLineNumber = "95"
+            endingLineNumber = "95"
             landmarkName = "AllDocuments(_:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -494,8 +430,8 @@
             filePath = "Documents page/AllDocumentsView/PreviewViewController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "24"
-            endingLineNumber = "24"
+            startingLineNumber = "15"
+            endingLineNumber = "15"
             landmarkName = "viewDidLoad()"
             landmarkType = "7">
          </BreakpointContent>
@@ -510,8 +446,8 @@
             filePath = "Documents page/AllDocumentsView/AllDocumentsView.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "400"
-            endingLineNumber = "400"
+            startingLineNumber = "381"
+            endingLineNumber = "381"
             landmarkName = "tableView(_:didSelectRowAt:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -526,8 +462,8 @@
             filePath = "Documents page/DocumentTableView/DocumentTableViewCell.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "61"
-            endingLineNumber = "61"
+            startingLineNumber = "42"
+            endingLineNumber = "42"
             landmarkName = "prepareForReuse()"
             landmarkType = "7">
          </BreakpointContent>
@@ -542,8 +478,8 @@
             filePath = "Documents page/AllDocumentsView/AllDocumentsView.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "399"
-            endingLineNumber = "399"
+            startingLineNumber = "380"
+            endingLineNumber = "380"
             landmarkName = "tableView(_:didSelectRowAt:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -558,8 +494,8 @@
             filePath = "Documents page/AllDocumentsView/AllDocumentsView.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "397"
-            endingLineNumber = "397"
+            startingLineNumber = "378"
+            endingLineNumber = "378"
             landmarkName = "tableView(_:didSelectRowAt:)"
             landmarkType = "7">
             <Locations>
@@ -606,8 +542,8 @@
             filePath = "Documents page/AllDocumentsView/AllDocumentsView.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "395"
-            endingLineNumber = "395"
+            startingLineNumber = "376"
+            endingLineNumber = "376"
             landmarkName = "tableView(_:didSelectRowAt:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -622,25 +558,9 @@
             filePath = "Documents page/AllDocumentsView/AllDocumentsView.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "455"
-            endingLineNumber = "455"
+            startingLineNumber = "436"
+            endingLineNumber = "436"
             landmarkName = "searchBarCancelButtonClicked(_:)"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            uuid = "B9E80AC8-0B90-44EF-9ECE-DCD46D71A86B"
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "Documents page/AllDocumentsView/AllDocumentsView.swift"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "89"
-            endingLineNumber = "89"
-            landmarkName = "searchAction(_:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -654,8 +574,8 @@
             filePath = "Documents page/AllDocumentsView/AllDocumentsView.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "171"
-            endingLineNumber = "171"
+            startingLineNumber = "163"
+            endingLineNumber = "163"
             landmarkName = "tableView(_:cellForRowAt:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -670,8 +590,8 @@
             filePath = "Documents page/AllDocumentsView/AllDocumentsView.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "170"
-            endingLineNumber = "170"
+            startingLineNumber = "162"
+            endingLineNumber = "162"
             landmarkName = "tableView(_:cellForRowAt:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -686,10 +606,10 @@
             filePath = "Documents page/AllDocumentsView/AllDocumentViewModel.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "51"
-            endingLineNumber = "51"
-            landmarkName = "filteredData(searchText:)"
-            landmarkType = "7">
+            startingLineNumber = "21"
+            endingLineNumber = "21"
+            landmarkName = "AllDocumentViewModel"
+            landmarkType = "3">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -702,10 +622,10 @@
             filePath = "Documents page/AllDocumentsView/AllDocumentViewModel.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "63"
-            endingLineNumber = "63"
-            landmarkName = "filteredData(searchText:)"
-            landmarkType = "7">
+            startingLineNumber = "33"
+            endingLineNumber = "33"
+            landmarkName = "AllDocumentViewModel"
+            landmarkType = "3">
             <Locations>
                <Location
                   uuid = "DD9A325B-B59F-4FFA-AC5F-2558E5D329EB - 5964d15407bead3f"
@@ -720,7 +640,7 @@
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "63"
                   endingLineNumber = "63"
-                  offsetFromSymbolStart = "686">
+                  offsetFromSymbolStart = "576">
                </Location>
                <Location
                   uuid = "DD9A325B-B59F-4FFA-AC5F-2558E5D329EB - 457903da8ddfc446"
@@ -735,7 +655,7 @@
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "64"
                   endingLineNumber = "64"
-                  offsetFromSymbolStart = "379">
+                  offsetFromSymbolStart = "292">
                </Location>
             </Locations>
          </BreakpointContent>
@@ -750,8 +670,8 @@
             filePath = "Documents page/AllDocumentsView/AllDocumentsView.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "370"
-            endingLineNumber = "370"
+            startingLineNumber = "351"
+            endingLineNumber = "351"
             landmarkName = "threeDotbuttonAction(sender:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -766,8 +686,8 @@
             filePath = "Documents page/AllDocumentsView/AllDocumentsView.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "368"
-            endingLineNumber = "368"
+            startingLineNumber = "349"
+            endingLineNumber = "349"
             landmarkName = "threeDotbuttonAction(sender:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -782,8 +702,8 @@
             filePath = "Documents page/AllDocumentsView/AllDocumentsView.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "374"
-            endingLineNumber = "374"
+            startingLineNumber = "355"
+            endingLineNumber = "355"
             landmarkName = "threeDotbuttonAction(sender:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -798,8 +718,8 @@
             filePath = "Documents page/AllDocumentsView/AllDocumentsView.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "411"
-            endingLineNumber = "411"
+            startingLineNumber = "392"
+            endingLineNumber = "392"
             landmarkName = "tableView(_:didSelectRowAt:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -814,8 +734,8 @@
             filePath = "Documents page/AllDocumentsView/AllDocumentsView.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "405"
-            endingLineNumber = "405"
+            startingLineNumber = "386"
+            endingLineNumber = "386"
             landmarkName = "tableView(_:didSelectRowAt:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -830,8 +750,8 @@
             filePath = "Documents page/AllDocumentsView/AllDocumentsView.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "401"
-            endingLineNumber = "401"
+            startingLineNumber = "382"
+            endingLineNumber = "382"
             landmarkName = "tableView(_:didSelectRowAt:)"
             landmarkType = "7">
          </BreakpointContent>
