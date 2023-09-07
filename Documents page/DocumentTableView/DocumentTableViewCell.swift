@@ -16,19 +16,23 @@ class DocumentTableViewCell: UITableViewCell {
     @IBOutlet weak var ImageData: UIImageView?
     var reloadTableView: (() -> ())?   
    
-    let viewModel = AllDocumentViewModel()
+    let viewModel = AllDocumentsView()
   
     override func awakeFromNib() {
         super.awakeFromNib()
+        view2.layer.cornerRadius = 10
+        view2.layer.maskedCorners = [.layerMinXMinYCorner, .layerMaxXMinYCorner]
+        view2.clipsToBounds = true
+      customView.layer.cornerRadius = 10
         downloadButton.isHidden = true
         downloadButton.layer.cornerRadius = 5
         contentView.layer.backgroundColor = CGColor(red: 239/255, green: 239/255, blue: 239/255, alpha: 1)
        // layer.backgroundColor = UIColor.green.cgColor
-        customView.layer.cornerRadius = 10
         self.reloadTableView?()
+
 //        starButton.setImage(UIImage(systemName: "star"), for: .normal)
 //        starButton.tintColor = .lightGray
-            view2.roundCorners( [.topRight, .topLeft], radius: 10)
+           
     }
   
 //    @IBAction func starAction(_ sender: Any) {
@@ -44,14 +48,17 @@ class DocumentTableViewCell: UITableViewCell {
 //    }
     override func layoutSubviews() {
         super.layoutSubviews()
-        customView.layer.masksToBounds = false
-//        customView?.layer.shadowColor = UIColor.black.cgColor
-//        customView?.layer.shadowOpacity = 0.2
-//        customView?.layer.shadowRadius = 3
+
         customView.layer.masksToBounds = false
         customView.layer.shadowOffset = CGSize(width: -1, height: 1)
         customView.layer.shadowRadius = 3
-        customView.layer.shadowOpacity = 0.3
+        customView.layer.shadowOpacity = 0.2
+    }
+    
+    
+    override func prepareForReuse() {
+        super.prepareForReuse()
+
     }
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
@@ -72,12 +79,13 @@ class DocumentTableViewCell: UITableViewCell {
             imageFormat?.image = UIImage(named: "doc")
         }
         
-        if cellObj.isSelected {
-            downloadButton.isHidden = false
-        } else {
-            downloadButton.isHidden = true
+//        if cellObj.isSelected {
+//            downloadButton.isHidden = false
+//        } else {
+//            downloadButton.isHidden = true
+//        }
         
-        }
+        print("cellObj.isSelected===>",cellObj.isSelected)
         
     }
     
@@ -103,28 +111,15 @@ class DocumentTableViewCell: UITableViewCell {
 //        let maskLayer = CAShapeLayer()
 //        maskLayer.path = maskPath.cgPath
 //        ImageData?.layer.mask = maskLayer
-//    }
-    
-    @IBAction func downloadAction(_ sender: UIButton) {
-      
-    }
-    
+//    }    
 }
+
 //extension UIView {
-//   func roundCorners(corners: UIRectCorner, radius: CGFloat) {
-//        let path = UIBezierPath(roundedRect: bounds, byRoundingCorners: corners, cornerRadii: CGSize(width: radius, height: radius))
+//
+//    func roundCorners(_ corners: UIRectCorner, radius: CGFloat) {
+//        let path = UIBezierPath(roundedRect: self.bounds, byRoundingCorners: corners, cornerRadii: CGSize(width: radius, height: radius))
 //        let mask = CAShapeLayer()
 //        mask.path = path.cgPath
-//        layer.mask = mask
+//        self.layer.mask = mask
 //    }
-//
 //}
-extension UIView {
-
-    func roundCorners(_ corners: UIRectCorner, radius: CGFloat) {
-        let path = UIBezierPath(roundedRect: self.bounds, byRoundingCorners: corners, cornerRadii: CGSize(width: radius, height: radius))
-        let mask = CAShapeLayer()
-        mask.path = path.cgPath
-        self.layer.mask = mask
-    }
-}

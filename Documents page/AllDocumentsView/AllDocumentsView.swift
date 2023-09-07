@@ -4,26 +4,27 @@ import QuartzCore
 import QuickLook
 import AVFoundation
 class AllDocumentsView: UIViewController {
+    @IBOutlet weak var label1: UILabel!
     @IBOutlet weak var searchButton: UIButton!
     @IBOutlet weak var topView: UIView!
-    @IBOutlet weak var documentsHead: UILabel!
+    @IBOutlet weak var backButton: UIButton!
     @IBOutlet weak var AllDocuments: UIButton!
     @IBOutlet weak var Starred: UIButton!
     @IBOutlet weak var DocumentTableView: UITableView!
     public var activityIndicator = ActivityIndicator()
     let documentInteractionController = UIDocumentInteractionController()
     let viewModel = AllDocumentViewModel()
-    
-    lazy var searchBar1: UISearchBar = {
+    var hideDownloadButton: (() -> ())?
+    var searchBar1: UISearchBar = {
         let searchBar = UISearchBar()
         searchBar.placeholder = "Search..."
         searchBar.sizeToFit()
-        searchBar.delegate = self
+        searchBar.searchTextField.backgroundColor = .white.withAlphaComponent(0.5)
         searchBar.searchBarStyle = .minimal
-        searchBar.backgroundColor = UIColor(red: 239/255, green: 239/255, blue: 239/255, alpha: 1)
-        searchBar.barTintColor = UIColor(red: 239/255, green: 239/255, blue: 239/255, alpha: 1)
+        searchBar.backgroundColor = .systemBlue
+        searchBar.tintColor = .white
+        searchBar.showsCancelButton = true
         searchBar.isUserInteractionEnabled = true
-        searchBar.showsCancelButton = false
         searchBar.translatesAutoresizingMaskIntoConstraints = false
         return searchBar
     }()
@@ -34,11 +35,12 @@ class AllDocumentsView: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        searchBar1.isTranslucent = true
-        searchBar1.clipsToBounds = false
+
+       // searchBar1.isTranslucent = true
         constraintForSearchBar()
+        searchBar1.delegate = self
         searchBar1.isHidden = true
-        
+
 
         if viewModel.allDocumentDatums.isEmpty {
             viewModel.indicatorStart = {
@@ -62,34 +64,49 @@ class AllDocumentsView: UIViewController {
         DocumentTableView.delegate = self
         DocumentTableView.dataSource = self
         forCornerRadius()
-//        DocumentTableView.showsVerticalScrollIndicator = false
        DocumentTableView.register(UINib(nibName: "DocumentTableViewCell", bundle: nil), forCellReuseIdentifier: "DocumentTableViewCell")
         
     }
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-    
+
     }
     @IBAction func StarredDocuments(_ sender: UIButton) {
         viewModel.filterButtonIndex = 1
-        viewModel.filteredData()
+        if !viewModel.searchEnable {
+            viewModel.filteredData()
+        }
+        Starred.backgroundColor = .white
+        AllDocuments.backgroundColor = .white.withAlphaComponent(0.5)
         Starred.tintColor = .systemBlue
         AllDocuments.tintColor = .black
         DocumentTableView.reloadData()
     }
     
     @IBAction func searchAction(_ sender: Any) {
-
         viewModel.searchEnable = true
+        //searchBar1.showsCancelButton = true
+        //searchBar1.isUserInteractionEnabled = true
         searchBar1.isHidden = false
+        searchBar1.becomeFirstResponder()
         searchButton.isHidden = true
-        documentsHead.isHidden = true
+        if viewModel.searchEnable {
+            if viewModel.filterButtonIndex == 1 {
+                AllDocuments.isEnabled = false
+            } else {
+                Starred.isEnabled = false
+            }
+        }
     }
     @IBAction func AllDocuments(_ sender: UIButton) {
         viewModel.filterButtonIndex = 2
-        viewModel.filteredData()
+        if !viewModel.searchEnable {
+            viewModel.filteredData()
+        }
+        AllDocuments.backgroundColor = .white
         Starred.tintColor = .black
+        Starred.backgroundColor = .white.withAlphaComponent(0.5)
         AllDocuments.tintColor = .systemBlue
         DocumentTableView.reloadData()
     }
@@ -106,7 +123,7 @@ class AllDocumentsView: UIViewController {
 
     func forCornerRadius() {
 
-        searchButton.layer.cornerRadius = 16
+        searchButton.layer.cornerRadius = 15
         Starred.layer.cornerRadius = 15
         AllDocuments.layer.cornerRadius = 15
         Starred?.layer.masksToBounds = true
@@ -116,27 +133,27 @@ class AllDocumentsView: UIViewController {
         view.addSubview(searchBar1)
         
         NSLayoutConstraint.activate([
-            searchBar1.topAnchor.constraint(equalTo: topView.bottomAnchor,constant: 20),
-            searchBar1.leadingAnchor.constraint(equalTo: view.leadingAnchor,constant: 25),
-            searchBar1.trailingAnchor.constraint(equalTo: searchButton.leadingAnchor),
-            searchBar1.bottomAnchor.constraint(equalTo: documentsHead.bottomAnchor),
+            searchBar1.topAnchor.constraint(equalTo: searchButton.topAnchor),
+            searchBar1.leadingAnchor.constraint(equalTo: backButton.trailingAnchor,constant: -5),
+            searchBar1.trailingAnchor.constraint(equalTo: searchButton.leadingAnchor,constant: -5),
+            searchBar1.bottomAnchor.constraint(equalTo: backButton.bottomAnchor),
         ])
+   
     }
     
 }
 
 extension AllDocumentsView: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        // return viewModel.filterButtonIndex == 2 ? viewModel.allDocumentDatums.count : viewModel.starredArray.count
-        return searchBar1.text?.isEmpty ?? false ? viewModel.starredArray.count : viewModel.searchArray.count
+        
+        return viewModel.starredArray.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
         let cell = tableView.dequeueReusableCell(withIdentifier: "DocumentTableViewCell", for: indexPath) as! DocumentTableViewCell
-        // cell.downloadButton.isHidden = true
-        let documentData = searchBar1.text?.isEmpty ?? false ? viewModel.starredArray : viewModel.searchArray
-        //  let documentData = viewModel.filterButtonIndex == 2 ? viewModel.allDocumentDatums : viewModel.starredArray
+
+        let documentData = viewModel.starredArray
         cell.DataName?.text = "\(documentData[indexPath.row].name ?? "")"
         
         cell.DataUploadBy?.text = "\(documentData[indexPath.row].sessions?.first?.deliverySymbol ?? "")\(documentData[indexPath.row].sessions?.first?.deliveryNo ?? 0) .By Dr.\(documentData[indexPath.row].UploadedBy?.name?.first ?? "" )" + "  " + "\(documentData[indexPath.row].UploadedBy?.name?.last ?? "" )"
@@ -148,42 +165,67 @@ extension AllDocumentsView: UITableViewDelegate, UITableViewDataSource {
         cell.starButton.tintColor = documentData[indexPath.row].isStarSelected ? .systemBlue : .lightGray
         //    cell.imageOptimization()
         cell.playImage.isHidden = true
+        let fileType = URL(string: documentData[indexPath.row].url ?? "")?.pathExtension.lowercased()
         
-        let fileType = viewModel.apiUrl[indexPath.row].pathExtension.lowercased()
+        if documentData[indexPath.row].isSelected {
+            cell.downloadButton.isHidden = false
+        } else {
+            cell.downloadButton.isHidden = true
+        }
+        cell.ImageData?.isHidden = true
+        cell.ImageData?.image = nil
+        print("viewModel.starredArray====>, ",viewModel.starredArray[indexPath.row].isSelected)
         switch fileType {
-            
         case "jpg","jpeg","png" :
-            let url = viewModel.apiUrl[indexPath.row]
-            DispatchQueue.global().async {
-                if let data = try? Data(contentsOf: url), let image = UIImage(data: data) {
-                    DispatchQueue.main.async {
-                        cell.ImageData?.image = image
-                        
+            if let url = URL(string: documentData[indexPath.row].url ?? ""){
+                DispatchQueue.global().async {
+                    if let data = try? Data(contentsOf: url), let image = UIImage(data: data) {
+                        DispatchQueue.main.async {
+                            cell.ImageData?.image = image
+                            
+                        }
                     }
                 }
             }
+            cell.ImageData?.isHidden = false
         case "mp4","mov" :
             cell.playImage.isHidden = false
         default:
-            print("well")
+           break
         }
         
         // cell.imageTopCorner()
         cell.reloadTableView = {
             tableView.reloadData()
         }
+        DocumentTableView.keyboardDismissMode = .onDrag
         cell.imageConfigure(cellObj: documentData[indexPath.row])
-        cell.starButton.addTarget(self, action: #selector(buttonAction), for: .touchUpInside)
+        cell.starButton.addTarget(self, action: #selector(starButtonAction), for: .touchUpInside)
         cell.threeDot.addTarget(self, action: #selector(threeDotbuttonAction), for: .touchUpInside)
         cell.downloadButton.addTarget(self, action: #selector(downloadButtonAction), for: .touchUpInside)
         return cell
     }
-    @objc func buttonAction(sender: UIButton!) {
+    @objc func starButtonAction(sender: UIButton!) {
         
         let btnPos = sender.convert(CGPoint.zero, to: DocumentTableView)
         guard let indexPath = DocumentTableView.indexPathForRow(at: btnPos) else {
             return
         }
+
+        if viewModel.starredArray[indexPath.row].isStarSelected {
+            if let index = viewModel.indexOf(data: viewModel.starredArray[indexPath.row]) {
+                viewModel.allDocumentDatums[index].isStarSelected = false
+            }
+        } else {
+            if let index = viewModel.indexOf(data: viewModel.starredArray[indexPath.row]) {
+                viewModel.allDocumentDatums[index].isStarSelected = true
+            }
+        }
+        viewModel.filteredData()
+        DocumentTableView.reloadData()
+        return
+        
+        
         //        if viewModel.filterButtonIndex == 2 {
         //            if viewModel.allDocumentDatums[indexPath.row].isStarSelected {
         //                viewModel.allDocumentDatums[indexPath.row].isStarSelected = false
@@ -218,23 +260,21 @@ extension AllDocumentsView: UITableViewDelegate, UITableViewDataSource {
          viewModel.starredArray[indexPath.row].isStarSelected = false
          
          } */
-        if viewModel.starredArray[indexPath.row].isStarSelected {
-            if let index = viewModel.indexOf(data: viewModel.starredArray[indexPath.row]) {
-                viewModel.allDocumentDatums[index].isStarSelected = false
-            }
-        } else {
-            if let index = viewModel.indexOf(data: viewModel.starredArray[indexPath.row]) {
-                viewModel.allDocumentDatums[index].isStarSelected = true
-            }
-        }
-        viewModel.filteredData()
-        DocumentTableView.reloadData()
-        return
+        
     }
+    
+
     @objc func downloadButtonAction(sender: UIButton) {
         let btnPos = sender.convert(CGPoint.zero, to: DocumentTableView)
         guard let indexPath = DocumentTableView.indexPathForRow(at: btnPos) else {
             return
+        }
+        viewModel.filteredData()
+        DocumentTableView.reloadData()
+        if viewModel.starredArray[indexPath.row].isSelected {
+            viewModel.starredArray[indexPath.row].isSelected = false
+        } else {
+            viewModel.starredArray[indexPath.row].isSelected = true
         }
         downloadfile(fileUrl: viewModel.starredArray[indexPath.row].url ?? "") { success, fileLocation in
             DispatchQueue.main.async {
@@ -316,20 +356,29 @@ extension AllDocumentsView: UITableViewDelegate, UITableViewDataSource {
         guard let indexPath = DocumentTableView.indexPathForRow(at: btnPos) else {
             return
         }
-        if viewModel.searchEnable {
-            if viewModel.searchArray[indexPath.row].isSelected {
-                viewModel.searchArray[indexPath.row].isSelected = false
-            } else {
-                viewModel.searchArray[indexPath.row].isSelected = true
+        let selectedModel = viewModel.starredArray[indexPath.row]
+        for (index,model) in viewModel.allDocumentDatums.enumerated() {
+            if selectedModel.id == model.id {
+                  viewModel.allDocumentDatums[index].isSelected = !selectedModel.isSelected
+                // viewModel.allDocumentDatums[index].isSelected.toggle()
             }
-        } else {
-            if viewModel.starredArray[indexPath.row].isSelected {
-                viewModel.starredArray[indexPath.row].isSelected = false
-            } else {
-                viewModel.starredArray[indexPath.row].isSelected = true
+            else {
+                viewModel.allDocumentDatums[index].isSelected = false
             }
+//            if viewModel.starredArray[indexPath.row].isSelected {
+//                if let index = viewModel.indexOf(data: viewModel.starredArray[indexPath.row]) {
+//                    viewModel.allDocumentDatums[index].isSelected = false
+//                }
+//            } else {
+//                if let index = viewModel.indexOf(data: viewModel.starredArray[indexPath.row]) {
+//                    viewModel.allDocumentDatums[index].isSelected = true
+//                }
+//            }
         }
+        viewModel.filteredData()
         DocumentTableView.reloadData()
+        return
+      
     }
     
     func DateFromWebtoApp(_ date: String) -> String {
@@ -344,8 +393,8 @@ extension AllDocumentsView: UITableViewDelegate, UITableViewDataSource {
         return UITableView.automaticDimension
     }
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let documentData = searchBar1.text?.isEmpty ?? false ? viewModel.starredArray : viewModel.searchArray
-        
+    
+        let documentData = viewModel.starredArray
         let fileType = documentData[indexPath.row].url
         if let fileExtension = URL(string: fileType ?? "")?.pathExtension.lowercased(){
             switch fileExtension {
@@ -356,11 +405,13 @@ extension AllDocumentsView: UITableViewDelegate, UITableViewDataSource {
             case "doc", "pdf", "jpeg","jpg","png","txt","xlsx" :
                 let vc = DGPreviewController(nibName: "QlPreviewController", bundle: nil)
                 vc.fileUrl = fileType ?? ""
+                //self.present(vc, animated: true)
                 self.navigationController!.pushViewController(vc, animated: true)
             default:
                 break
             }
         }
+     
     }
 }
 
@@ -372,7 +423,6 @@ extension AllDocumentsView {
             let totalPageNo = viewModel.totalpage
             if viewModel.filterButtonIndex == 2 {
                 if currentPageNo < totalPageNo  {
-                    //   self.pagingIndicator.startAnimating()
                     self.showLoading()
                     // more items to fetch
                     if viewModel.apiReady {
@@ -387,37 +437,47 @@ extension AllDocumentsView {
        
     func loadMoreItems(){
         viewModel.forApiIntegration(page: viewModel.currentPage + 1, limit: 10) {
-//            self.pagingIndicator.stopAnimating()
             self.DocumentTableView.reloadData()
             self.hideLoadingView()
-//            self.pagingIndicator.isHidden = true
         }
     }
-
 }
+
 extension AllDocumentsView: UISearchBarDelegate {
-    func searchBarShouldBeginEditing(_ searchBar: UISearchBar) -> Bool {
-        searchBar1.showsCancelButton = true
-        return true
+    
+    func searchBarTextDidBeginEditing(_ searchBar: UISearchBar) {
+        searchBar.showsCancelButton = true
+    }
+    func searchBarTextDidEndEditing(_ searchBar: UISearchBar) {
+        searchBar.showsCancelButton = false
     }
     func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
         searchBar1.text = ""
+        viewModel.filteredData()
+        searchBar.resignFirstResponder()
         viewModel.searchEnable = false
         searchBar1.isHidden = true
         searchButton.isHidden = false
+        AllDocuments.isEnabled = true
+        Starred.isEnabled = true
         DocumentTableView.reloadData()
-        documentsHead.isHidden = false
+
     }
+    
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
-        viewModel.searchArray = viewModel.starredArray.filter({ element in
-            element.name?.lowercased().contains(searchText.lowercased()) == true ||
-            element.UploadedBy?.name?.first?.lowercased().contains(searchText.lowercased()) == true ||         element.UploadedBy?.name?.last?.lowercased().contains(searchText.lowercased()) == true ||             element.updatedAt?.lowercased().contains(searchText.lowercased()) == true ||
-            element.type?.lowercased().contains(searchText.lowercased()) == true ||
-            "\(element.sessions?.first?.deliveryNo ?? 0)"
-                .lowercased().contains(searchText.lowercased()) == true ||
-            "\(element.sessions?.first?.deliverySymbol ?? "")"
-                .lowercased().contains(searchText.lowercased()) == true
-        })
+        /*
+        if viewModel.filterButtonIndex == 2 {
+            viewModel.searchArray = viewModel.starredArray.filter({ element in
+                element.name?.lowercased().contains(searchText.lowercased()) == true ||
+                element.UploadedBy?.name?.first?.lowercased().contains(searchText.lowercased()) == true ||         element.UploadedBy?.name?.last?.lowercased().contains(searchText.lowercased()) == true ||             element.updatedAt?.lowercased().contains(searchText.lowercased()) == true ||
+                element.type?.lowercased().contains(searchText.lowercased()) == true ||
+                "\(element.sessions?.first?.deliveryNo ?? 0)"
+                    .lowercased().contains(searchText.lowercased()) == true ||
+                "\(element.sessions?.first?.deliverySymbol ?? "")"
+                    .lowercased().contains(searchText.lowercased()) == true
+            })
+        } */
+        viewModel.filteredData(searchText: searchText)
         self.DocumentTableView.reloadData()
     }
 }

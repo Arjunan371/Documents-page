@@ -30,7 +30,6 @@ class DGPreviewController: QLPreviewController, QLPreviewControllerDataSource {
         super.viewDidLoad()
         
         //fileUrl = ""
-        
         self.dataSource = self;
         self.view.addSubview(activityIndicator)
         activityIndicator.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true

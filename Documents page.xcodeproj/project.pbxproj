@@ -26,6 +26,8 @@
 		8DC709DA2A8DFCC90034DEFE /* AllDocumentsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8DC709D82A8DFCC90034DEFE /* AllDocumentsView.swift */; };
 		8DC709DD2A8E07C60034DEFE /* AllDocumentsView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8DC709DC2A8E07C60034DEFE /* AllDocumentsView.xib */; };
 		9F75D2982A9C7C2F003F0DC1 /* ActivityIndicator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F75D2972A9C7C2F003F0DC1 /* ActivityIndicator.swift */; };
+		9F7D57AF2AA893E600A11758 /* TestViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F7D57AD2AA893E600A11758 /* TestViewController.swift */; };
+		9F7D57B02AA893E600A11758 /* TestViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9F7D57AE2AA893E600A11758 /* TestViewController.xib */; };
 		9F8A202C2AA0760500A2CD40 /* PreviewViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F8A202A2AA0760500A2CD40 /* PreviewViewController.swift */; };
 		9F8A202D2AA0760500A2CD40 /* PreviewViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9F8A202B2AA0760500A2CD40 /* PreviewViewController.xib */; };
 		9F92FF0C2A9C8CE10041FA08 /* AllActions.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9F92FF0B2A9C8CE10041FA08 /* AllActions.xib */; };
@@ -73,6 +75,8 @@
 		8DC709D82A8DFCC90034DEFE /* AllDocumentsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AllDocumentsView.swift; sourceTree = "<group>"; };
 		8DC709DC2A8E07C60034DEFE /* AllDocumentsView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AllDocumentsView.xib; sourceTree = "<group>"; };
 		9F75D2972A9C7C2F003F0DC1 /* ActivityIndicator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivityIndicator.swift; sourceTree = "<group>"; };
+		9F7D57AD2AA893E600A11758 /* TestViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestViewController.swift; sourceTree = "<group>"; };
+		9F7D57AE2AA893E600A11758 /* TestViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = TestViewController.xib; sourceTree = "<group>"; };
 		9F8A202A2AA0760500A2CD40 /* PreviewViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreviewViewController.swift; sourceTree = "<group>"; };
 		9F8A202B2AA0760500A2CD40 /* PreviewViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PreviewViewController.xib; sourceTree = "<group>"; };
 		9F92FF0B2A9C8CE10041FA08 /* AllActions.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AllActions.xib; sourceTree = "<group>"; };
@@ -139,6 +143,8 @@
 				8D819E522A8CF0E200282F17 /* LaunchScreen.storyboard */,
 				8D819E792A8CF2E300282F17 /* TabbarController */,
 				8D819E552A8CF0E200282F17 /* Info.plist */,
+				9F7D57AD2AA893E600A11758 /* TestViewController.swift */,
+				9F7D57AE2AA893E600A11758 /* TestViewController.xib */,
 			);
 			path = "Documents page";
 			sourceTree = "<group>";
@@ -333,6 +339,7 @@
 				8D819E542A8CF0E200282F17 /* LaunchScreen.storyboard in Resources */,
 				8D2A7E1F2A8CFAF600F626DB /* MySessions.xib in Resources */,
 				9F8A202D2AA0760500A2CD40 /* PreviewViewController.xib in Resources */,
+				9F7D57B02AA893E600A11758 /* TestViewController.xib in Resources */,
 				8DC709CD2A8DE04A0034DEFE /* DocumentTableViewCell.xib in Resources */,
 				8D819E512A8CF0E200282F17 /* Assets.xcassets in Resources */,
 				8DC709DD2A8E07C60034DEFE /* AllDocumentsView.xib in Resources */,
@@ -366,6 +373,7 @@
 				8D08E5C02A8E34380018AFF3 /* AllDocumentViewModel.swift in Sources */,
 				9F94AD0F2AA5C41800B66BB4 /* QlPreviewController.swift in Sources */,
 				8DC709DA2A8DFCC90034DEFE /* AllDocumentsView.swift in Sources */,
+				9F7D57AF2AA893E600A11758 /* TestViewController.swift in Sources */,
 				9F8A202C2AA0760500A2CD40 /* PreviewViewController.swift in Sources */,
 				8D819E482A8CF0E100282F17 /* AppDelegate.swift in Sources */,
 				8D81C91D2A8F390B00E84E17 /* documentTabBar.swift in Sources */,
@@ -470,7 +478,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 16.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
@@ -524,7 +532,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 16.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				SDKROOT = iphoneos;

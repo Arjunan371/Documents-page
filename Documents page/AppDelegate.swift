@@ -24,8 +24,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func setAsRootViewController(_ controllers: [UIViewController]){
             self.navigationController =  UINavigationController()
             self.navigationController?.viewControllers = controllers
-            self.navigationController?.navigationBar.isHidden = true
-            self.navigationController?.interactivePopGestureRecognizer?.isEnabled = false
+        self.navigationController.setNavigationBarHidden(true, animated: false)
+            //self.navigationController?.interactivePopGestureRecognizer?.isEnabled = false
             self.window = UIWindow(frame: UIScreen.main.bounds)
             self.window?.rootViewController = self.navigationController
             self.window?.makeKeyAndVisible()
